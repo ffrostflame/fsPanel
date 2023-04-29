@@ -1,0 +1,28 @@
+{
+	"name": "development",
+	"tree": {
+		"$className": "DataModel",
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
+			"Packages": {
+				"$path": "Packages",
+				"DebugLibraryUnnamed": {
+					"$path": "src"
+				}
+			}
+		},
+		"StarterPlayer": {
+			"StarterPlayerScripts": {
+				"$className": "StarterPlayerScripts",
+				"ClientTesting": {
+					"$path": "tests/client"
+				}
+			}
+		},
+		"ServerScriptService": {
+			"ServerTesting": {
+				"$path": "tests/server"
+			}
+		}
+	}
+}
