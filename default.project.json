@@ -1,0 +1,11 @@
+{
+	"name": "DebugLibraryUnnamed",
+	"tree": {
+		"Packages": {
+			"$path": "Packages",
+			"DebugLibraryUnnamed": {
+				"$path": "src"
+			}
+		}
+	}
+}
