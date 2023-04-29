@@ -1,6 +1,7 @@
 {
 	"name": "DebugLibraryUnnamed",
 	"tree": {
+		"$className": "Folder",
 		"Packages": {
 			"$path": "Packages",
 			"DebugLibraryUnnamed": {

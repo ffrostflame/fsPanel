@@ -2,8 +2,8 @@
 	"name": "test",
 	"tree": {
 		"$className": "DataModel",
-		"ServerStorage": {
-			"$className": "ServerStorage",
+		"ReplicatedStorage": {
+			"$className": "ReplicatedStorage",
 			"thing": {
 				"$path": "default.project.json"
 			}
