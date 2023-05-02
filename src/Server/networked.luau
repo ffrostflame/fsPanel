@@ -86,6 +86,10 @@ function networked.init(playerAuthFunction: ((plr: Player) -> boolean)?)
 	end)
 end
 
+function networked.makeReplicatedValue(name: string, val: any)
+	
+end
+
 function networked.addDebugAction(name: string, func: (callingPlr: Player) -> () | nil)
 	assert(hasStarted, "Library has not started yet! run .init()")
 	assert(typeof(name) == "string", "name is not string")
