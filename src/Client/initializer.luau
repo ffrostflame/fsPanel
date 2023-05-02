@@ -1,3 +1,3 @@
 return function()
-    require(script.Parent.ui).init()
+    require(script.Parent.interface).init()
 end

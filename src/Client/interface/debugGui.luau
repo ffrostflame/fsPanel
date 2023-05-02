@@ -1,59 +1,199 @@
-local Fusion = require(script.Parent.Parent.Parent.Parent.Parent.Fusion)
+local Fusion = require(script.Parent.Parent.Parent.Parent.Fusion)
 local New = Fusion.New
 local Children = Fusion.Children
 local Value = Fusion.Value
 
-local Style = require(script.Parent.Parent.Data.style)
+local Style = require(script.Parent.Data.style)
 
-local components = script.Components
+local components = script.Parent.Components
 local Stat = require(components.stat)
 
 return function()
-    New "ScreenGui" {
-        Name = "DebugGui",
+	return New("Frame")({
+		Name = "DebugGui",
+		BackgroundTransparency = 0.4,
+		BorderSizePixel = 1,
+		BackgroundColor3 = Style.Palettes.Default.BackgroundDark,
+		BorderColor3 = Style.Palettes.Default.Border,
+		Size = UDim2.new(0, 800, 0, 400),
 
-        [Children] = {
-            New "Frame" {
-                Name = "ServerStats",
-                BackgroundTransparency = 0.4,
-                BorderSizePixel = 1,
-                BackgroundColor3 = Style.Palettes.Default.BackgroundDark,
-                BorderColor3 = Style.Palettes.Default.Border,
-                Size = UDim2.new(0.333, 0, 1, 0)
-            },
+		[Children] = {
+			New("TextLabel")({
+				Name = "Title",
+				Text = "Debug Panel",
+				TextSize = Style.Text.Sizes.Body,
+				BackgroundTransparency = 1,
+				Size = UDim2.new(1, 0, 0, 30),
+				TextColor3 = Style.Palettes.Default.Foreground,
+				Font = Style.Text.Fonts.Bold,
+				TextXAlignment = Enum.TextXAlignment.Center,
+			}),
 
-            New "Frame" {
-                Name = "GameStats",
-                BackgroundTransparency = 0.4,
-                BorderSizePixel = 1,
-                BackgroundColor3 = Style.Palettes.Default.BackgroundDark,
-                BorderColor3 = Style.Palettes.Default.Border,
-                AnchorPoint = Vector2.new(0.5, 0),
-                Position = UDim2.new(0.5, 0, 0, 0),
-                Size = UDim2.new(0.333, 0, 1, 0),
+			New("Frame")({
+				Name = "ServerStats",
+				BackgroundTransparency = 0.4,
+				BorderSizePixel = 1,
+				BackgroundColor3 = Style.Palettes.Default.BackgroundDark,
+				BorderColor3 = Style.Palettes.Default.Border,
+				AnchorPoint = Vector2.new(0, 1),
+				Position = UDim2.new(0, 0, 1, 0),
+				Size = UDim2.new(0.333, 0, 1, -30),
 
-                [Children] = {
-                    New "UIListLayout" {
-                        Padding = Vector2.new(0, 0)
-                    },
+				[Children] = {
+					New("TextLabel")({
+						Name = "Title",
+						Text = "Server Stats",
+						TextSize = Style.Text.Sizes.Body,
+						BackgroundTransparency = 1,
+						Size = UDim2.new(1, 0, 0, 30),
+						TextColor3 = Style.Palettes.Default.Foreground,
+						Font = Style.Text.Fonts.Bold,
+						TextXAlignment = Enum.TextXAlignment.Center,
+					}),
 
-                    Stat {
-                        Name = "Test",
-                        StatValue = Value(100)
-                    }
-                }
-            },
+					New("Frame")({
+						Name = "InnerFrame",
+						BackgroundTransparency = 0.4,
+						BorderSizePixel = 1,
+						BackgroundColor3 = Style.Palettes.Default.BackgroundDark,
+						BorderColor3 = Style.Palettes.Default.Border,
+						AnchorPoint = Vector2.new(0.5, 1),
+						Position = UDim2.new(0.5, 0, 1, -5),
+						Size = UDim2.new(1, -10, 1, -35),
 
-            New "Frame" {
-                Name = "Functions",
-                BackgroundTransparency = 0.4,
-                BorderSizePixel = 1,
-                BackgroundColor3 = Style.Palettes.Default.BackgroundLight,
-                BorderColor3 = Style.Palettes.Default.Border,
-                AnchorPoint = Vector2.new(1, 0),
-                Position = UDim2.new(1, 0, 0, 0),
-                Size = UDim2.new(0.333, 0, 1, 0)
-            }
-        }
-    }
+						[Children] = {
+							New("UIListLayout")({
+								Padding = UDim.new(0, 1),
+								SortOrder = Enum.SortOrder.LayoutOrder,
+							}),
+
+							New("Frame")({
+								Name = "Kbps",
+								BackgroundTransparency = 0.4,
+								BorderSizePixel = 1,
+								BackgroundColor3 = Style.Palettes.Default.BackgroundDark,
+								BorderColor3 = Style.Palettes.Default.Border,
+								AutomaticSize = Enum.AutomaticSize.Y,
+								Size = UDim2.new(1, 0, 0, 0),
+								LayoutOrder = 1,
+
+								[Children] = {
+									New("UIListLayout")({
+										Padding = UDim.new(0, 0),
+										SortOrder = Enum.SortOrder.LayoutOrder,
+									}),
+
+									Stat({
+										Name = "DataReceiveKbps",
+										StatValue = Value(0),
+									}),
+
+									Stat({
+										Name = "DataSendKbps",
+										StatValue = Value(0),
+									}),
+								},
+							}),
+
+							New("Frame")({
+								Name = "Ms",
+								BackgroundTransparency = 0.4,
+								BorderSizePixel = 1,
+								BackgroundColor3 = Style.Palettes.Default.BackgroundDark,
+								BorderColor3 = Style.Palettes.Default.Border,
+								AutomaticSize = Enum.AutomaticSize.Y,
+								Size = UDim2.new(1, 0, 0, 0),
+								LayoutOrder = 2,
+
+								[Children] = {
+									New("UIListLayout")({
+										Padding = UDim.new(0, 0),
+										SortOrder = Enum.SortOrder.LayoutOrder,
+									}),
+
+									Stat({
+										Name = "HeartbeatTimeMs",
+										StatValue = Value(0),
+									}),
+
+									Stat({
+										Name = "PhysicsStepTimeMs",
+										StatValue = Value(0),
+									}),
+								},
+							}),
+
+							New("Frame")({
+								Name = "Mb",
+								BackgroundTransparency = 0.4,
+								BorderSizePixel = 1,
+								BackgroundColor3 = Style.Palettes.Default.BackgroundDark,
+								BorderColor3 = Style.Palettes.Default.Border,
+								AutomaticSize = Enum.AutomaticSize.Y,
+								Size = UDim2.new(1, 0, 0, 0),
+								LayoutOrder = 3,
+
+								[Children] = {
+									New("UIListLayout")({
+										Padding = UDim.new(0, 0),
+										SortOrder = Enum.SortOrder.LayoutOrder,
+									}),
+
+									Stat({
+										Name = "TotalMemoryUsageMb",
+										StatValue = Value(0),
+									}),
+								},
+							}),
+
+							New("Frame")({
+								Name = "FPS",
+								BackgroundTransparency = 0.4,
+								BorderSizePixel = 1,
+								BackgroundColor3 = Style.Palettes.Default.BackgroundDark,
+								BorderColor3 = Style.Palettes.Default.Border,
+								AutomaticSize = Enum.AutomaticSize.Y,
+								Size = UDim2.new(1, 0, 0, 0),
+								LayoutOrder = 4,
+
+								[Children] = {
+									New("UIListLayout")({
+										Padding = UDim.new(0, 0),
+										SortOrder = Enum.SortOrder.LayoutOrder,
+									}),
+
+									Stat({
+										Name = "Server FPS",
+										StatValue = Value(0),
+									}),
+								},
+							}),
+						},
+					}),
+				},
+			}),
+
+			New("Frame")({
+				Name = "GameStats",
+				BackgroundTransparency = 0.4,
+				BorderSizePixel = 1,
+				BackgroundColor3 = Style.Palettes.Default.BackgroundDark,
+				BorderColor3 = Style.Palettes.Default.Border,
+				AnchorPoint = Vector2.new(0.5, 1),
+				Position = UDim2.new(0.5, 0, 1, 0),
+				Size = UDim2.new(0.333, 0, 1, -30),
+			}),
+
+			New("Frame")({
+				Name = "Functions",
+				BackgroundTransparency = 0.4,
+				BorderSizePixel = 1,
+				BackgroundColor3 = Style.Palettes.Default.BackgroundLight,
+				BorderColor3 = Style.Palettes.Default.Border,
+				AnchorPoint = Vector2.new(1, 1),
+				Position = UDim2.new(1, 0, 1, 0),
+				Size = UDim2.new(0.333, 0, 1, -30),
+			}),
+		},
+	})
 end
