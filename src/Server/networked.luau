@@ -32,6 +32,14 @@ function networked.init(playerAuthFunction: ((plr: Player) -> boolean)?)
 	communicationRemote.Name = "DebugLibraryRemote"
 	communicationRemote.Parent = ReplicatedStorage
 
+	local getSetupInfo = Instance.new("RemoteFunction")
+	getSetupInfo.Name = "SetupInfoRemote"
+	getSetupInfo.Parent = ReplicatedStorage
+
+	getSetupInfo.OnClientInvoke = function(plr)
+		return table.find(authorizedPlayers, plr) ~= nil
+	end
+
 	Players.PlayerAdded:Connect(function(player)
 		if playerAuthFunction ~= nil then
 			if playerAuthFunction(player) then
