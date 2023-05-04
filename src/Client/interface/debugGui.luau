@@ -3,10 +3,13 @@ local New = Fusion.New
 local Children = Fusion.Children
 local Value = Fusion.Value
 
-local Style = require(script.Parent.Data.style)
-
 local components = script.Parent.Components
 local Stat = require(components.stat)
+
+local DataHandler = require(script.Parent.Parent.dataHandler)
+local Style = require(script.Parent.Data.style)
+
+local enums = require(script.Parent.Parent.Parent.enums)
 
 return function()
 	return New("Frame")({
@@ -85,12 +88,12 @@ return function()
 
 									Stat({
 										Name = "DataReceiveKbps",
-										StatValue = Value(0),
+										StatValue = DataHandler.ServerStats[enums.ServerStatItems.DataReceiveKbps],
 									}),
 
 									Stat({
 										Name = "DataSendKbps",
-										StatValue = Value(0),
+										StatValue = DataHandler.ServerStats[enums.ServerStatItems.DataSendKbps],
 									}),
 								},
 							}),
@@ -113,12 +116,12 @@ return function()
 
 									Stat({
 										Name = "HeartbeatTimeMs",
-										StatValue = Value(0),
+										StatValue = DataHandler.ServerStats[enums.ServerStatItems.HeartbeatTimeMs],
 									}),
 
 									Stat({
 										Name = "PhysicsStepTimeMs",
-										StatValue = Value(0),
+										StatValue = DataHandler.ServerStats[enums.ServerStatItems.PhysicsStepTimeMs],
 									}),
 								},
 							}),
@@ -141,7 +144,7 @@ return function()
 
 									Stat({
 										Name = "TotalMemoryUsageMb",
-										StatValue = Value(0),
+										StatValue = DataHandler.ServerStats[enums.ServerStatItems.TotalMemoryUsageMb],
 									}),
 								},
 							}),
@@ -164,7 +167,7 @@ return function()
 
 									Stat({
 										Name = "Server FPS",
-										StatValue = Value(0),
+										StatValue = DataHandler.ServerStats[enums.ServerStatItems.ServerFps],
 									}),
 								},
 							}),
