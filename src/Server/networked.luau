@@ -36,7 +36,7 @@ function networked.init(playerAuthFunction: ((plr: Player) -> boolean)?)
 	getSetupInfo.Name = "SetupInfoRemote"
 	getSetupInfo.Parent = ReplicatedStorage
 
-	getSetupInfo.OnClientInvoke = function(plr)
+	getSetupInfo.OnServerInvoke = function(plr)
 		return table.find(authorizedPlayers, plr) ~= nil
 	end
 
