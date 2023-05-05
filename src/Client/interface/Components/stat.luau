@@ -17,7 +17,7 @@ return function(props)
 		Text = props.Name,
 		BackgroundTransparency = 1,
 		TextSize = Style.Text.Sizes.Body,
-		Size = UDim2.new(0.85, 0, 0, 16),
+		Size = UDim2.new(1, 0, 0, 16),
 		TextColor3 = Style.Palettes.Default.Foreground,
 		Font = Style.Text.Fonts.Default,
 		TextXAlignment = Enum.TextXAlignment.Left,
@@ -29,17 +29,21 @@ return function(props)
 				TextSize = Style.Text.Sizes.Body,
 				AnchorPoint = Vector2.new(1, 0),
 				Position = UDim2.new(1, 0, 0, 0),
-				Size = UDim2.new(0.15, 0, 1, 0),
+				Size = UDim2.new(0.25, 0, 1, 0),
 				TextColor3 = Computed(function()
-					local targetFunction = if props.StatCategory == enums.Categories.ServerStats
-						then DataHandler.TargetFunctions[enums.Categories.ServerStats][enums.ServerStatItems[props.StatValue]]
-						else DataHandler.TargetFunctions[enums.Categories.GameStats]["custom"]
+					local targetFunction
+					if props.StatCategory == enums.Categories.ServerStats then
+						targetFunction =
+							DataHandler.TargetFunctions[enums.Categories.ServerStats][enums.ServerStatItems[props.Name]]
+						print(props.Name)
+						print(targetFunction)
+					else
+						targetFunction = DataHandler.TargetFunctions[enums.Categories.GameStats]["custom"]
+					end
 
-					return Color3.fromHSV(
-						(120 / 255) * targetFunction(props.StatValue:get()),
-						1,
-						1
-					)
+					print(targetFunction)
+
+					return Color3.fromHSV((120 / 255) * targetFunction(props.StatValue:get()), 1, 1)
 				end),
 				Font = Style.Text.Fonts.Default,
 				TextXAlignment = Enum.TextXAlignment.Left,
