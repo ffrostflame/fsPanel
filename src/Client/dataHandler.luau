@@ -11,7 +11,7 @@ local DataHandler = {}
 
 DataHandler.TargetFunctions =
 	{ -- Each target function returns a 0-1 value indicating how optimal the value is (0 = worst, 1 = best, -1 = not applicable/something went wrong)
-		ServerStats = {
+		[enums.Categories.ServerStats] = {
 			[enums.ServerStatItems.DataReceiveKbps] = function(text: string)
 				return -1
 			end,
