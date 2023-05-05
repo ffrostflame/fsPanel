@@ -11,7 +11,7 @@ local function floatToString(number: number, place: number?)
 	if place == nil then
 		return wholeNumber
 	else
-		return wholeNumber .. "." .. string.sub(split[2], 1, place)
+		return wholeNumber .. "." .. string.sub(split[2] or "", 1, place)
 	end
 end
 
