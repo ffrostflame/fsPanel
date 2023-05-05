@@ -12,7 +12,7 @@ local function getServerStats(serverFps: number)
 		[enums.ServerStatItems.HeartbeatTimeMs] = Stats.HeartbeatTimeMs,
 		[enums.ServerStatItems.PhysicsStepTimeMs] = Stats.PhysicsStepTimeMs,
 		[enums.ServerStatItems.ServerFps] = serverFps,
-		[enums.ServerStatItems.TotalMemoryTime] = Stats:GetTotalMemoryUsageMb()
+		[enums.ServerStatItems.TotalMemoryUsageMb] = Stats:GetTotalMemoryUsageMb()
 	}
 end
 
