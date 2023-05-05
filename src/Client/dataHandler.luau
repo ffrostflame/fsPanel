@@ -15,7 +15,7 @@ DataHandler.ServerStats = {
 	[enums.ServerStatItems.HeartbeatTimeMs] = Value(0),
 	[enums.ServerStatItems.PhysicsStepTimeMs] = Value(0),
 	[enums.ServerStatItems.ServerFps] = Value(0),
-	[enums.ServerStatItems.TotalMemoryMb] = Value(0),
+	[enums.ServerStatItems.TotalMemoryUsageMb] = Value(0),
 }
 
 function DataHandler.init()
