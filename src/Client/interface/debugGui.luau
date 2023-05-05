@@ -88,11 +88,13 @@ return function()
 
 									Stat({
 										Name = "DataReceiveKbps",
+										StatCategory = enums.Categories.ServerStats,
 										StatValue = DataHandler.ServerStats[enums.ServerStatItems.DataReceiveKbps],
 									}),
 
 									Stat({
 										Name = "DataSendKbps",
+										StatCategory = enums.Categories.ServerStats,
 										StatValue = DataHandler.ServerStats[enums.ServerStatItems.DataSendKbps],
 									}),
 								},
@@ -116,11 +118,13 @@ return function()
 
 									Stat({
 										Name = "HeartbeatTimeMs",
+										StatCategory = enums.Categories.ServerStats,
 										StatValue = DataHandler.ServerStats[enums.ServerStatItems.HeartbeatTimeMs],
 									}),
 
 									Stat({
 										Name = "PhysicsStepTimeMs",
+										StatCategory = enums.Categories.ServerStats,
 										StatValue = DataHandler.ServerStats[enums.ServerStatItems.PhysicsStepTimeMs],
 									}),
 								},
@@ -144,6 +148,7 @@ return function()
 
 									Stat({
 										Name = "TotalMemoryUsageMb",
+										StatCategory = enums.Categories.ServerStats,
 										StatValue = DataHandler.ServerStats[enums.ServerStatItems.TotalMemoryUsageMb],
 									}),
 								},
@@ -167,6 +172,7 @@ return function()
 
 									Stat({
 										Name = "Server FPS",
+										StatCategory = enums.Categories.ServerStats,
 										StatValue = DataHandler.ServerStats[enums.ServerStatItems.ServerFps],
 									}),
 								},
