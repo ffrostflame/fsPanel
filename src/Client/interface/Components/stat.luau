@@ -31,8 +31,12 @@ return function(props)
 				Position = UDim2.new(1, 0, 0, 0),
 				Size = UDim2.new(0.15, 0, 1, 0),
 				TextColor3 = Computed(function()
+					local targetFunction = if props.StatCategory == enums.Categories.ServerStats
+						then DataHandler.TargetFunctions[enums.Categories.ServerStats][enums.ServerStatItems[props.StatValue]]
+						else DataHandler.TargetFunctions[enums.Categories.GameStats]["custom"]
+
 					return Color3.fromHSV(
-						(120 / 255) * DataHandler.TargetFunctions[props.StatCategory][props.Name](props.StatValue:get()),
+						(120 / 255) * targetFunction(props.StatValue:get()),
 						1,
 						1
 					)

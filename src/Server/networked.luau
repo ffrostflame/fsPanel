@@ -15,7 +15,27 @@ local function floatToString(number: number, place: number?)
 	end
 end
 
-local function getServerStats(serverFps: number)
+local networked = {}
+
+local authorizedPlayers = {}
+local debugActions = {}
+local hasStarted = false
+local customValues = {}
+local currentServerStats = {}
+
+local function updateServerStats(serverFps)
+	currentServerStats = {
+		[enums.ServerStatItems.DataReceiveKbps] = Stats.DataReceiveKbps,
+		[enums.ServerStatItems.DataSendKbps] = Stats.DataSendKbps,
+		[enums.ServerStatItems.HeartbeatTimeMs] = Stats.HeartbeatTimeMs,
+		[enums.ServerStatItems.PhysicsStepTimeMs] = Stats.PhysicsStepTimeMs,
+		[enums.ServerStatItems.ServerFps] = serverFps,
+		[enums.ServerStatItems.TotalMemoryUsageMb] = Stats:GetTotalMemoryUsageMb()
+	}
+end
+
+local function getServerStatsFormatted(serverFps: number)
+	updateServerStats(serverFps)
 	return {
 		[enums.ServerStatItems.DataReceiveKbps] = floatToString(Stats.DataReceiveKbps, 3),
 		[enums.ServerStatItems.DataSendKbps] = floatToString(Stats.DataSendKbps, 3),
@@ -25,12 +45,6 @@ local function getServerStats(serverFps: number)
 		[enums.ServerStatItems.TotalMemoryUsageMb] = floatToString(Stats:GetTotalMemoryUsageMb())
 	}
 end
-
-local networked = {}
-
-local authorizedPlayers = {}
-local debugActions = {}
-local hasStarted = false
 
 local communicationRemote
 
@@ -111,7 +125,7 @@ function networked.init(playerAuthFunction: ((plr: Player) -> boolean)?)
 end
 
 function networked.makeReplicatedValue(name: string, val: any)
-	
+	customValues[name] = val
 end
 
 function networked.addDebugAction(name: string, func: (callingPlr: Player) -> () | nil)
