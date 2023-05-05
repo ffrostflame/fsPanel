@@ -9,6 +9,9 @@
 				"DebugLibraryUnnamed": {
 					"$path": "src"
 				}
+			},
+			"DebugLibraryRemote": {
+				"$className": "RemoteEvent"
 			}
 		},
 		"StarterPlayer": {

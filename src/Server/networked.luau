@@ -19,23 +19,9 @@ local networked = {}
 
 local authorizedPlayers = {}
 local debugActions = {}
-local hasStarted = false
 local customValues = {}
-local currentServerStats = {}
-
-local function updateServerStats(serverFps)
-	currentServerStats = {
-		[enums.ServerStatItems.DataReceiveKbps] = Stats.DataReceiveKbps,
-		[enums.ServerStatItems.DataSendKbps] = Stats.DataSendKbps,
-		[enums.ServerStatItems.HeartbeatTimeMs] = Stats.HeartbeatTimeMs,
-		[enums.ServerStatItems.PhysicsStepTimeMs] = Stats.PhysicsStepTimeMs,
-		[enums.ServerStatItems.ServerFps] = serverFps,
-		[enums.ServerStatItems.TotalMemoryUsageMb] = Stats:GetTotalMemoryUsageMb()
-	}
-end
 
 local function getServerStatsFormatted(serverFps: number)
-	updateServerStats(serverFps)
 	return {
 		[enums.ServerStatItems.DataReceiveKbps] = floatToString(Stats.DataReceiveKbps, 3),
 		[enums.ServerStatItems.DataSendKbps] = floatToString(Stats.DataSendKbps, 3),
@@ -48,11 +34,8 @@ end
 
 local communicationRemote
 
-function networked.init(playerAuthFunction: ((plr: Player) -> boolean)?)
-	-- error handling
-	hasStarted = true
-
-	communicationRemote = Instance.new("RemoteEvent")
+function networked.init(playerAuthFunction: ((plr: Player) -> boolean)?, debugActions: { [string]: () -> () }, replicatedValues: { [string]: any })
+	communicationRemote = ReplicatedStorage:FindFirstChild("DebugLibraryRemote") or Instance.new("RemoteEvent")
 	communicationRemote.Name = "DebugLibraryRemote"
 	communicationRemote.Parent = ReplicatedStorage
 
@@ -61,7 +44,11 @@ function networked.init(playerAuthFunction: ((plr: Player) -> boolean)?)
 	getSetupInfo.Parent = ReplicatedStorage
 
 	getSetupInfo.OnServerInvoke = function(plr)
-		return table.find(authorizedPlayers, plr) ~= nil
+		return {
+			isAuthorized = table.find(authorizedPlayers, plr) ~= nil,
+			debugActionNames = {},
+			replicatedValues = {},
+		}
 	end
 
 	local function PlayerAdded(player)
@@ -94,14 +81,12 @@ function networked.init(playerAuthFunction: ((plr: Player) -> boolean)?)
 		end
 
 		local isValidPacketType = enums.PacketTypes[obj[1]] ~= nil
-		if isValidPacketType then
-			local isAuthorized = table.find(authorizedPlayers, player) ~= nil
-			if isAuthorized then
-				-- find the debug action, then execute it with the the first parameter being the player calling
-				debugActions[obj[2]](player)
-			else
-				player:Kick("not authorized to execute debug actions")
-			end
+		if not isValidPacketType or table.find(authorizedPlayers, player) ~= nil then
+			return player:Kick("not authorized to execute debug actions")
+		end
+
+		if obj[1] == enums.PacketTypes.executeAction then
+			debugActions[obj[2]](player)
 		end
 	end)
 
@@ -113,7 +98,7 @@ function networked.init(playerAuthFunction: ((plr: Player) -> boolean)?)
 
 			for _, plr in authorizedPlayers do
 				local data = {
-					[enums.Categories.ServerStats] = getServerStats(currentFps),
+					[enums.Categories.ServerStats] = getServerStatsFormatted(currentFps),
 					[enums.Categories.GameStats] = {},
 				}
 
@@ -124,16 +109,8 @@ function networked.init(playerAuthFunction: ((plr: Player) -> boolean)?)
 	end)
 end
 
-function networked.makeReplicatedValue(name: string, val: any)
+function networked.updateReplicatedValue(name: string, val: any)
 	customValues[name] = val
-end
-
-function networked.addDebugAction(name: string, func: (callingPlr: Player) -> () | nil)
-	assert(hasStarted, "Library has not started yet! run .init()")
-	assert(typeof(name) == "string", "name is not string")
-	assert(typeof(func) == "function", "func is not function")
-
-	debugActions[name] = func
 end
 
 return networked
