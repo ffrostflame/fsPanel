@@ -5,6 +5,7 @@ return function()
 
 	local authorized = remote:InvokeServer()
 	if not authorized then
+		print("Not authorized")
 		return
 	end
 
