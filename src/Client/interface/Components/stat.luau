@@ -15,7 +15,7 @@ return function(props)
 		TextSize = Style.Text.Sizes.Body,
 		Size = UDim2.new(1, 0, 0, 16),
 		TextColor3 = Style.Palettes.Default.Foreground,
-		Font = Style.Text.Fonts.Bold,
+		Font = Style.Text.Fonts.Default,
 		TextXAlignment = Enum.TextXAlignment.Left,
 
 		[Children] = {
@@ -28,7 +28,7 @@ return function(props)
 				Font = Style.Text.Fonts.Default,
 				TextXAlignment = Enum.TextXAlignment.Right,
 				Text = Computed(function()
-					return tostring(props.StatValue:get()) .. props.UnitName
+					return (props.StatValue and tostring(props.StatValue:get()) .. props.UnitName) or "[Loading]"
 				end),
 			}),
 		},

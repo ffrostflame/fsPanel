@@ -8,6 +8,7 @@ function ui.init()
 	-- Create UI
 	local screenGui = Instance.new("ScreenGui")
 	screenGui.Name = "DebugScreenGui"
+	screenGui.DisplayOrder = 100
 
 	debugGui().Parent = screenGui
 

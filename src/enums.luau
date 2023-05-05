@@ -2,9 +2,9 @@
 return {
 	PacketTypes = {
 		update = "1",
-		connected = "2",
-		setup = "3",
-		executeAction = "4",
+		-- connected = "2",
+		-- setup = "3",
+		executeAction = "2",
 	},
 	Categories = {
 		ServerStats = 1,
@@ -16,6 +16,30 @@ return {
 		HeartbeatTimeMs = 3,
 		PhysicsStepTimeMs = 4,
 		ServerFps = 5,
-		TotalMemoryMb = 6,
+		TotalMemoryUsageMb = 6,
 	},
 }
+
+--[[
+
+A remote "DebugLibraryRemote" is created and placed into ReplicatedStorage
+The server will use this remote to send debug data to all authorized clients every 0.5s
+
+The server sends one table with the following data:
+{
+	PacketType,
+	{
+		[enums.Categories.ServerStats] = {
+			[enums.ServerStatItems.DataReceiveKbps],
+			[enums.ServerStatItems.DataSendKbps],
+			[enums.ServerStatItems.HeartbeatTimeMs],
+			[enums.ServerStatItems.PhysicsStepTimeMs],
+			[enums.ServerStatItems.ServerFps],
+			[enums.ServerStatItems.TotalMemoryMb]
+		},
+
+		[enums.Categories.GameStats] = {}
+	}
+}
+
+]]
