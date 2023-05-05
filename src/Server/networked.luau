@@ -45,7 +45,7 @@ function networked.init(playerAuthFunction: ((plr: Player) -> boolean)?)
 			if playerAuthFunction(player) then
 				table.insert(authorizedPlayers, player)
 			else
-				if game.CreatorType == Enum.CreatorType.User and game.CreatorId == player.UserId then
+				if (game.CreatorType == Enum.CreatorType.User and game.CreatorId == player.UserId) or RunService:IsStudio() then
 					table.insert(authorizedPlayers, player)
 				end
 			end
