@@ -3,12 +3,11 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 return function()
 	local remote = ReplicatedStorage:WaitForChild("SetupInfoRemote")
 
-	local authorized = remote:InvokeServer()
-	if not authorized then
-		print("Not authorized")
+	local setupData = remote:InvokeServer()
+	if not setupData.isAuthorized then
 		return
 	end
 
-	require(script.Parent.interface).init()
-	require(script.Parent.dataHandler).init()
+	require(script.Parent.interface).init(setupData)
+	require(script.Parent.dataHandler).init(setupData)
 end
