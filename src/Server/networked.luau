@@ -5,14 +5,24 @@ local Stats = game:GetService("Stats")
 
 local enums = require(script.Parent.Parent.enums)
 
+local function floatToString(number: number, place: number?)
+	local split = string.split(tostring(number), ".")
+	local wholeNumber = split[1]
+	if place == nil then
+		return wholeNumber
+	else
+		return wholeNumber .. "." .. string.sub(split[2], 1, place)
+	end
+end
+
 local function getServerStats(serverFps: number)
 	return {
-		[enums.ServerStatItems.DataReceiveKbps] = Stats.DataReceiveKbps,
-		[enums.ServerStatItems.DataSendKbps] = Stats.DataSendKbps,
-		[enums.ServerStatItems.HeartbeatTimeMs] = Stats.HeartbeatTimeMs,
-		[enums.ServerStatItems.PhysicsStepTimeMs] = Stats.PhysicsStepTimeMs,
-		[enums.ServerStatItems.ServerFps] = serverFps,
-		[enums.ServerStatItems.TotalMemoryUsageMb] = Stats:GetTotalMemoryUsageMb()
+		[enums.ServerStatItems.DataReceiveKbps] = floatToString(Stats.DataReceiveKbps, 3),
+		[enums.ServerStatItems.DataSendKbps] = floatToString(Stats.DataSendKbps, 3),
+		[enums.ServerStatItems.HeartbeatTimeMs] = floatToString(Stats.HeartbeatTimeMs * 1000, 3),
+		[enums.ServerStatItems.PhysicsStepTimeMs] = floatToString(Stats.PhysicsStepTimeMs * 1000, 3),
+		[enums.ServerStatItems.ServerFps] = floatToString(serverFps),
+		[enums.ServerStatItems.TotalMemoryUsageMb] = floatToString(Stats:GetTotalMemoryUsageMb())
 	}
 end
 
