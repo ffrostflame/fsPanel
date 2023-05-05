@@ -37,20 +37,29 @@ function networked.init(playerAuthFunction: ((plr: Player) -> boolean)?)
 	getSetupInfo.Parent = ReplicatedStorage
 
 	getSetupInfo.OnServerInvoke = function(plr)
+		print(authorizedPlayers)
 		return table.find(authorizedPlayers, plr) ~= nil
 	end
 
-	Players.PlayerAdded:Connect(function(player)
+	local function PlayerAdded(player)
 		if playerAuthFunction ~= nil then
 			if playerAuthFunction(player) then
+				print("auth function exists")
 				table.insert(authorizedPlayers, player)
 			else
 				if (game.CreatorType == Enum.CreatorType.User and game.CreatorId == player.UserId) or RunService:IsStudio() then
+					print(authorizedPlayers)
 					table.insert(authorizedPlayers, player)
 				end
 			end
 		end
-	end)
+	end
+
+	for _, player in Players:GetPlayers() do
+		PlayerAdded(PlayerAdded)
+	end
+
+	Players.PlayerAdded:Connect(PlayerAdded)
 
 	local currentFps = 60
 	RunService.Heartbeat:Connect(function(deltaTime)
