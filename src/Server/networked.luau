@@ -25,8 +25,8 @@ local function getServerStatsFormatted(serverFps: number)
 	return {
 		[enums.ServerStatItems.DataReceiveKbps] = floatToString(Stats.DataReceiveKbps, 3),
 		[enums.ServerStatItems.DataSendKbps] = floatToString(Stats.DataSendKbps, 3),
-		[enums.ServerStatItems.HeartbeatTimeMs] = floatToString(Stats.HeartbeatTimeMs * 1000, 3),
-		[enums.ServerStatItems.PhysicsStepTimeMs] = floatToString(Stats.PhysicsStepTimeMs * 1000, 3),
+		[enums.ServerStatItems.HeartbeatTimeMs] = floatToString(Stats.HeartbeatTimeMs, 3),
+		[enums.ServerStatItems.PhysicsStepTimeMs] = floatToString(Stats.PhysicsStepTimeMs, 3),
 		[enums.ServerStatItems.ServerFps] = floatToString(serverFps),
 		[enums.ServerStatItems.TotalMemoryUsageMb] = floatToString(Stats:GetTotalMemoryUsageMb())
 	}
