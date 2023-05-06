@@ -12,7 +12,36 @@ local Style = require(script.Parent.Data.style)
 
 local enums = require(script.Parent.Parent.Parent.enums)
 
-return function()
+return function(props)
+	--[[
+	local setupData = props.SetupData
+	
+	local actionInnerFrameChildren = {}
+	for _,name in setupData.debugActionNames do
+		New("Frame")({
+			Name = "Category",
+			BackgroundTransparency = 0.4,
+			BorderSizePixel = 1,
+			BackgroundColor3 = Style.Palettes.Default.BackgroundDark,
+			BorderColor3 = Style.Palettes.Default.Border,
+			AutomaticSize = Enum.AutomaticSize.Y,
+			Size = UDim2.new(1, 0, 0, 0),
+			LayoutOrder = 1,
+
+			[Children] = {
+				New("UIListLayout")({
+					Padding = UDim.new(0, 0),
+					SortOrder = Enum.SortOrder.LayoutOrder,
+				}),
+
+				DebugActionButton({
+					Name = "Action",
+				}),
+			},
+		}),
+	end
+	]]
+
 	return New("Frame")({
 		Name = "DebugGui",
 		BackgroundTransparency = 0.4,
@@ -195,7 +224,7 @@ return function()
 			}),
 
 			New("Frame")({
-				Name = "Functions",
+				Name = "Actions",
 				BackgroundTransparency = 0.4,
 				BorderSizePixel = 1,
 				BackgroundColor3 = Style.Palettes.Default.BackgroundLight,
@@ -251,28 +280,6 @@ return function()
 							New("UIListLayout")({
 								Padding = UDim.new(0, 1),
 								SortOrder = Enum.SortOrder.LayoutOrder,
-							}),
-
-							New("Frame")({
-								Name = "Category",
-								BackgroundTransparency = 0.4,
-								BorderSizePixel = 1,
-								BackgroundColor3 = Style.Palettes.Default.BackgroundDark,
-								BorderColor3 = Style.Palettes.Default.Border,
-								AutomaticSize = Enum.AutomaticSize.Y,
-								Size = UDim2.new(1, 0, 0, 0),
-								LayoutOrder = 1,
-
-								[Children] = {
-									New("UIListLayout")({
-										Padding = UDim.new(0, 0),
-										SortOrder = Enum.SortOrder.LayoutOrder,
-									}),
-
-									DebugActionButton({
-										Name = "Action",
-									}),
-								},
 							}),
 						},
 					}),

@@ -4,13 +4,13 @@ local ui = {}
 
 local plr = game.Players.LocalPlayer
 
-function ui.init()
+function ui.init(setupData)
 	-- Create UI
 	local screenGui = Instance.new("ScreenGui")
 	screenGui.Name = "DebugScreenGui"
 	screenGui.DisplayOrder = 100
 
-	debugGui().Parent = screenGui
+	debugGui({ SetupData = setupData }).Parent = screenGui
 
 	screenGui.Parent = plr:WaitForChild("PlayerGui")
 end
