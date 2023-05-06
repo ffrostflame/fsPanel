@@ -35,15 +35,16 @@ return function(props)
 					if props.StatCategory == enums.Categories.ServerStats then
 						targetFunction =
 							DataHandler.TargetFunctions[enums.Categories.ServerStats][enums.ServerStatItems[props.Name]]
-						print(props.Name)
-						print(targetFunction)
 					else
 						targetFunction = DataHandler.TargetFunctions[enums.Categories.GameStats]["custom"]
 					end
 
-					print(targetFunction)
+					local goodness = targetFunction(props.StatValue:get())
+					if goodness == -1 then
+						return Color3.new(0.560784, 0.560784, 0.560784)
+					end
 
-					return Color3.fromHSV((120 / 255) * targetFunction(props.StatValue:get()), 1, 1)
+					return Color3.fromHSV((120 / 359) * goodness, 1, 1)
 				end),
 				Font = Style.Text.Fonts.Default,
 				TextXAlignment = Enum.TextXAlignment.Left,

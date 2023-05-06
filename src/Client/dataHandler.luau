@@ -20,19 +20,19 @@ DataHandler.TargetFunctions =
 			end,
 			[enums.ServerStatItems.HeartbeatTimeMs] = function(text: string)
 				local number = tonumber(text)
-				return 1 - number / 10
+				return math.clamp(1 - number / 10, 0, 1)
 			end,
 			[enums.ServerStatItems.PhysicsStepTimeMs] = function(text: string)
 				local number = tonumber(text)
-				return 1 - number / 12
+				return math.clamp(1 - number / 12, 0, 1)
 			end,
 			[enums.ServerStatItems.ServerFps] = function(text: string)
 				local number = tonumber(text)
-				return number / 50
+				return math.clamp(number / 50, 0, 1)
 			end,
 			[enums.ServerStatItems.TotalMemoryUsageMb] = function(text: string)
 				local number = tonumber(text)
-				return 1 - number / 4
+				return math.clamp(1 - number / 4, 0, 1)
 			end,
 		},
 	}
