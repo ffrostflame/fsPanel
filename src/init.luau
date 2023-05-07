@@ -2,12 +2,9 @@ local RunService = game:GetService("RunService")
 
 local logging = require(script.logging)
 
-local Client = require(script.Client)
-local Server = require(script.Server)
-
 setmetatable({
-	Client = if RunService:IsClient() then Client else nil,
-	Server = if RunService:IsServer() then Server else nil,
+	Client = if RunService:IsClient() then require(script.Client) else nil,
+	Server = if RunService:IsServer() then require(script.Server) else nil,
 }, {
 	__index = function(_, index)
 		if index == "Client" and RunService:IsServer() then
