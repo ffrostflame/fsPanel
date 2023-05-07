@@ -38,7 +38,6 @@ function networked.init(playerAuthFunction: ((plr: Player) -> boolean)?, debugAc
 	communicationRemote = ReplicatedStorage:FindFirstChild("DebugLibraryRemote") or Instance.new("RemoteEvent")
 	communicationRemote.Name = "DebugLibraryRemote"
 	communicationRemote.Parent = ReplicatedStorage
-
 	local getSetupInfo = Instance.new("RemoteFunction")
 	getSetupInfo.Name = "SetupInfoRemote"
 	getSetupInfo.Parent = ReplicatedStorage

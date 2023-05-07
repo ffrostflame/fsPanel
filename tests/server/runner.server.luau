@@ -3,4 +3,8 @@ local DebugLibraryUnnamed = require(ReplicatedStorage.Packages.DebugLibraryUnnam
 
 DebugLibraryUnnamed.Server.init(function()
 	return true
-end, {}, {})
+end, {
+	testAction = function(plr)
+		print(`Hello { plr.Name }`)
+	end
+}, {})
