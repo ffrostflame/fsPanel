@@ -18,7 +18,7 @@ end
 local networked = {}
 
 local authorizedPlayers = {}
-local debugActions = {}
+local debugActionDict = {}
 local customValues = {}
 
 local function getServerStatsFormatted(serverFps: number)
@@ -43,10 +43,16 @@ function networked.init(playerAuthFunction: ((plr: Player) -> boolean)?, debugAc
 	getSetupInfo.Name = "SetupInfoRemote"
 	getSetupInfo.Parent = ReplicatedStorage
 
+	local actionNames = {}
+	for label, action in debugActions do
+		debugActionDict[label] = action
+		table.insert(actionNames, label)
+	end
+
 	getSetupInfo.OnServerInvoke = function(plr)
 		return {
 			isAuthorized = table.find(authorizedPlayers, plr) ~= nil,
-			debugActionNames = {},
+			debugActionNames = actionNames,
 			replicatedValues = {},
 		}
 	end
@@ -86,7 +92,7 @@ function networked.init(playerAuthFunction: ((plr: Player) -> boolean)?, debugAc
 		end
 
 		if obj[1] == enums.PacketTypes.executeAction then
-			debugActions[obj[2]](player)
+			debugActionDict[obj[2]](player)
 		end
 	end)
 
