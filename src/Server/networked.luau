@@ -28,13 +28,17 @@ local function getServerStatsFormatted(serverFps: number)
 		[enums.ServerStatItems.HeartbeatTimeMs] = floatToString(Stats.HeartbeatTimeMs, 3),
 		[enums.ServerStatItems.PhysicsStepTimeMs] = floatToString(Stats.PhysicsStepTimeMs, 3),
 		[enums.ServerStatItems.ServerFps] = floatToString(serverFps),
-		[enums.ServerStatItems.TotalMemoryUsageMb] = floatToString(Stats:GetTotalMemoryUsageMb())
+		[enums.ServerStatItems.TotalMemoryUsageMb] = floatToString(Stats:GetTotalMemoryUsageMb()),
 	}
 end
 
 local communicationRemote
 
-function networked.init(playerAuthFunction: ((plr: Player) -> boolean)?, debugActions: { [string]: () -> () }, replicatedValues: { [string]: any })
+function networked.init(
+	playerAuthFunction: ((plr: Player) -> boolean)?,
+	debugActions: { [string]: () -> () },
+	replicatedValues: { [string]: any }
+)
 	communicationRemote = ReplicatedStorage:FindFirstChild("DebugLibraryRemote") or Instance.new("RemoteEvent")
 	communicationRemote.Name = "DebugLibraryRemote"
 	communicationRemote.Parent = ReplicatedStorage
@@ -62,7 +66,10 @@ function networked.init(playerAuthFunction: ((plr: Player) -> boolean)?, debugAc
 				table.insert(authorizedPlayers, player)
 			end
 		else
-			if (game.CreatorType == Enum.CreatorType.User and game.CreatorId == player.UserId) or RunService:IsStudio() then
+			if
+				(game.CreatorType == Enum.CreatorType.User and game.CreatorId == player.UserId)
+				or RunService:IsStudio()
+			then
 				table.insert(authorizedPlayers, player)
 			end
 		end
@@ -85,8 +92,8 @@ function networked.init(playerAuthFunction: ((plr: Player) -> boolean)?, debugAc
 			return
 		end
 
-		local isValidPacketType = enums.PacketTypes[obj[1]] ~= nil
-		if not isValidPacketType or table.find(authorizedPlayers, player) == nil then
+		-- local isValidPacketType = enums.PacketTypes[obj[1]] ~= nil
+		if table.find(authorizedPlayers, player) == nil then
 			return player:Kick("not authorized to execute debug actions")
 		end
 
