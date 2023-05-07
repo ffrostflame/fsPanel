@@ -56,4 +56,8 @@ function network.init()
 	end)
 end
 
+function network.printToAllClients(string: string)
+	
+end
+
 return network

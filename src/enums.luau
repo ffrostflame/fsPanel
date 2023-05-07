@@ -2,9 +2,8 @@
 return {
 	PacketTypes = {
 		update = "1",
-		-- connected = "2",
-		-- setup = "3",
 		executeAction = "2",
+		printToClient = "3",
 	},
 	Categories = {
 		ServerStats = 1,
