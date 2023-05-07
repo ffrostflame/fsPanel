@@ -12,7 +12,7 @@ local Style = require(script.Parent.Parent.Data.style)
 
 local enums = require(script.Parent.Parent.Parent.Parent.enums)
 
-local remote = ReplicatedStorage.DebugLibraryRemote
+local remote = ReplicatedStorage.fsPanel_communicationRemote
 
 return function(props)
 	props.UnitName = props.UnitName or ""
