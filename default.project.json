@@ -1,7 +1,6 @@
 {
-	"name": "DebugLibraryUnnamed",
+	"name": "fsPanel",
 	"tree": {
-		"$className": "Folder",
 		"$path": "src"
 	}
 }

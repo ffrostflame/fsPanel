@@ -6,12 +6,9 @@
 			"$className": "ReplicatedStorage",
 			"Packages": {
 				"$path": "Packages",
-				"DebugLibraryUnnamed": {
+				"fsPanel": {
 					"$path": "src"
 				}
-			},
-			"DebugLibraryRemote": {
-				"$className": "RemoteEvent"
 			}
 		},
 		"StarterPlayer": {

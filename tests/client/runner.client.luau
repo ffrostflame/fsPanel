@@ -1,4 +1,4 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local DebugLibraryUnnamed = require(ReplicatedStorage.Packages.DebugLibraryUnnamed)
+local fsPanel = require(ReplicatedStorage.Packages.fsPanel)
 
-DebugLibraryUnnamed.Client.init()
+fsPanel.Client.init()

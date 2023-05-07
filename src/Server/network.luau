@@ -6,9 +6,9 @@ local serverStats = require(script.Parent.serverStats)
 local auth = require(script.Parent.auth)
 local debugActions = require(script.Parent.debugActions)
 
-local networked = {}
+local network = {}
 
-function networked.init()
+function network.init()
 	local fsPanelFolder = Instance.new("Folder")
 	fsPanelFolder.Name = "fsPanelFolder"
 	fsPanelFolder.Parent = ReplicatedStorage
@@ -44,7 +44,7 @@ function networked.init()
 			lastSent = os.clock()
 
 			local data = {
-				[enums.Categories.ServerStats] = serverStats.get(),
+				[enums.Categories.ServerStats] = serverStats.getServerStats(),
 				[enums.Categories.GameStats] = {},
 			}
 
@@ -56,4 +56,4 @@ function networked.init()
 	end)
 end
 
-return networked
+return network
