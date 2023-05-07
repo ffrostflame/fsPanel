@@ -19,8 +19,4 @@ local export = setmetatable({
 	end
 })
 
-print(export)
-print(export.Client)
-print(export.Server)
-
 return export
