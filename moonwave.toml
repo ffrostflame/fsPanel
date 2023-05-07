@@ -5,7 +5,7 @@ changelog = true
 
 [docusaurus]
 projectName = "fsPanel"
-tagline = "A debug panel designed for easy viewing of server-sided performance"
+tagline = "A generalized developer-defined debugging panel"
 favicon = "favicon.png"
 
 [navbar.logo]

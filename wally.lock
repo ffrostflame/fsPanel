@@ -10,4 +10,9 @@ dependencies = []
 [[package]]
 name = "ffrostfall/debuglibraryunnamed"
 version = "0.1.0"
-dependencies = [["Fusion", "elttob/fusion@0.2.0"]]
+dependencies = [["Fusion", "elttob/fusion@0.2.0"], ["Signal", "stravant/goodsignal@0.2.1"]]
+
+[[package]]
+name = "stravant/goodsignal"
+version = "0.2.1"
+dependencies = []

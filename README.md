@@ -4,6 +4,6 @@
 
 # fsPanel
 
-A debug panel designed for easy viewing of server-sided performance
+A generalized developer-defined debugging panel. Created by Steven_Scripts and ffrostfall.
 
 </div>
