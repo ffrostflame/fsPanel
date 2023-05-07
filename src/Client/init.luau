@@ -1,5 +1,5 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-ReplicatedStorage:WaitForChild("fsPanel_communicationRemote")
+ReplicatedStorage:WaitForChild("fsPanelFolder")
 
 return {
 	init = require(script.initializer)({
