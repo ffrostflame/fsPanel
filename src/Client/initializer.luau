@@ -1,7 +1,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 return function(clientConfig)
-	local remote = ReplicatedStorage:WaitForChild("fsPanel_getSetupInfo")
+	local remote = ReplicatedStorage:WaitForChild("fsPanelFolder").fsPanel_getSetupInfo
 
 	local setupData = remote:InvokeServer()
 	if not setupData.isAuthorized then

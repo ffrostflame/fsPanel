@@ -21,7 +21,8 @@ return {
 
 --[[
 
-A remote "fsPanel_communicationRemote" is created and placed into ReplicatedStorage
+A folder "fsPanelFolder" is created and placed into ReplicatedStorage
+The remote "fsPanel_communicationRemote" is placed into this folder
 The server will use this remote to send debug data to all authorized clients every 0.5s
 
 The server sends one table with the following data:

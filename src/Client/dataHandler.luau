@@ -49,7 +49,7 @@ DataHandler.ServerStats = {
 }
 
 function DataHandler.init(setupData, clientConfig)
-	remote = ReplicatedStorage:WaitForChild("DebugLibraryRemote")
+	remote = ReplicatedStorage.fsPanelFolder.fsPanel_communicationRemote
 
 	remote.OnClientEvent:Connect(function(receivedPerfData)
 		local packetType = receivedPerfData[1]
