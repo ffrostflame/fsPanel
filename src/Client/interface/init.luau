@@ -16,20 +16,22 @@ function ui.init(setupData, clientConfig)
 	debugGui({ SetupData = setupData }).Parent = screenGui
 
 	-- Track key presses to toggle UI
-	local panelKeysDown = {}
+	local toggleKeys = clientConfig.toggleKeys or { Enum.KeyCode.LeftAlt, Enum.KeyCode.F5 }
+
+	local toggleKeysDown = {}
 	UserInputService.InputBegan:Connect(function(input, _)
 		if input.UserInputType ~= Enum.UserInputType.Keyboard then
 			return
 		end
-		if table.find(clientConfig.togglePanelKeys, input.KeyCode) == nil then
+		if table.find(toggleKeys, input.KeyCode) == nil then
 			return
 		end
 
-		panelKeysDown[input.KeyCode] = true
+		toggleKeysDown[input.KeyCode] = true
 
 		-- Check if all keys are pressed
-		for _, keyCode in clientConfig.togglePanelKeys do
-			if not panelKeysDown[keyCode] then
+		for _, keyCode in toggleKeys do
+			if not toggleKeysDown[keyCode] then
 				return
 			end
 		end
@@ -42,11 +44,11 @@ function ui.init(setupData, clientConfig)
 		if input.UserInputType ~= Enum.UserInputType.Keyboard then
 			return
 		end
-		if table.find(clientConfig.togglePanelKeys, input.KeyCode) == nil then
+		if table.find(toggleKeys, input.KeyCode) == nil then
 			return
 		end
 
-		panelKeysDown[input.KeyCode] = nil
+		toggleKeysDown[input.KeyCode] = nil
 	end)
 
 	screenGui.Parent = plr:WaitForChild("PlayerGui")
