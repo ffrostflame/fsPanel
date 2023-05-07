@@ -1,0 +1,20 @@
+title = "fsPanel"
+gitRepoUrl = "https://github.com/ffrostflame/fsPanel/"
+
+changelog = true
+
+[docusaurus]
+projectName = "fsPanel"
+tagline = "A debug panel designed for easy viewing of server-sided performance"
+favicon = "favicon.png"
+
+[navbar.logo]
+alt = "fsPanel"
+src = "logo.png"
+
+[footer]
+style = "dark"
+
+[home]
+enabled = true
+includeReadme = false

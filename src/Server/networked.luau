@@ -86,7 +86,7 @@ function networked.init(playerAuthFunction: ((plr: Player) -> boolean)?, debugAc
 		end
 
 		local isValidPacketType = enums.PacketTypes[obj[1]] ~= nil
-		if not isValidPacketType or table.find(authorizedPlayers, player) ~= nil then
+		if not isValidPacketType or table.find(authorizedPlayers, player) == nil then
 			return player:Kick("not authorized to execute debug actions")
 		end
 
