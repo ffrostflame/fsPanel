@@ -1,6 +1,11 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-ReplicatedStorage:WaitForChild("DebugLibraryRemote")
+ReplicatedStorage:WaitForChild("fsPanel_communicationRemote")
 
 return {
-	init = require(script.initializer),
+	init = require(script.initializer)({
+		togglePanelKeys = {
+			Enum.KeyCode.LeftAlt,
+			Enum.KeyCode.F5,
+		},
+	}),
 }

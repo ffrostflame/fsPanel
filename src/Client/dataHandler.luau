@@ -48,7 +48,7 @@ DataHandler.ServerStats = {
 	[enums.ServerStatItems.TotalMemoryUsageMb] = Value(0), -- >4
 }
 
-function DataHandler.init()
+function DataHandler.init(setupData, clientConfig)
 	remote = ReplicatedStorage:WaitForChild("DebugLibraryRemote")
 
 	remote.OnClientEvent:Connect(function(receivedPerfData)
