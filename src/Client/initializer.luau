@@ -8,6 +8,6 @@ return function()
 		return
 	end
 
-	require(script.Parent.interface).init(setupData)
 	require(script.Parent.dataHandler).init(setupData)
+	require(script.Parent.interface).init(setupData)
 end

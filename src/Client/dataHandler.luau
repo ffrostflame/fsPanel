@@ -32,7 +32,9 @@ DataHandler.TargetFunctions =
 			end,
 			[enums.ServerStatItems.TotalMemoryUsageMb] = function(text: string)
 				local number = tonumber(text)
-				return math.clamp(1 - number / 4, 0, 1)
+
+				local min, max = 3000, 4000
+				return math.clamp(1 - ((number - min) / (max - min)), 0, 1)
 			end,
 		},
 	}
