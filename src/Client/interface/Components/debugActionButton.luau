@@ -46,7 +46,7 @@ return function(props)
 				Size = UDim2.new(0.25, 0, 1, 0),
 
 				[OnEvent("Activated")] = function()
-					remote:FireServer(enums.PacketTypes.executeAction, props.Name)
+					remote:FireServer({ enums.PacketTypes.executeAction, props.Name })
 				end,
 			}),
 		},

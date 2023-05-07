@@ -13,34 +13,36 @@ local Style = require(script.Parent.Data.style)
 local enums = require(script.Parent.Parent.Parent.enums)
 
 return function(props)
-	--[[
 	local setupData = props.SetupData
-	
-	local actionInnerFrameChildren = {}
-	for _,name in setupData.debugActionNames do
-		New("Frame")({
-			Name = "Category",
-			BackgroundTransparency = 0.4,
-			BorderSizePixel = 1,
-			BackgroundColor3 = Style.Palettes.Default.BackgroundDark,
-			BorderColor3 = Style.Palettes.Default.Border,
-			AutomaticSize = Enum.AutomaticSize.Y,
-			Size = UDim2.new(1, 0, 0, 0),
-			LayoutOrder = 1,
 
-			[Children] = {
-				New("UIListLayout")({
-					Padding = UDim.new(0, 0),
-					SortOrder = Enum.SortOrder.LayoutOrder,
-				}),
-
-				DebugActionButton({
-					Name = "Action",
-				}),
-			},
+	local actionInnerFrameChildren = {
+		New("UIListLayout")({
+			Padding = UDim.new(0, 1),
+			SortOrder = Enum.SortOrder.LayoutOrder,
 		}),
+	}
+
+	print(setupData.debugActionNames)
+	for _, actionName in setupData.debugActionNames do
+		--[[
+			New("Frame")({
+				Name = "Category",
+				BackgroundTransparency = 0.4,
+				BorderSizePixel = 1,
+				BackgroundColor3 = Style.Palettes.Default.BackgroundDark,
+				BorderColor3 = Style.Palettes.Default.Border,
+				AutomaticSize = Enum.AutomaticSize.Y,
+				Size = UDim2.new(1, 0, 0, 0),
+				LayoutOrder = 1,
+			})
+		]]
+		table.insert(
+			actionInnerFrameChildren,
+			DebugActionButton({
+				Name = actionName,
+			})
+		)
 	end
-	]]
 
 	return New("Frame")({
 		Name = "DebugGui",
@@ -245,7 +247,8 @@ return function(props)
 						TextXAlignment = Enum.TextXAlignment.Center,
 					}),
 
-					New("TextBox")({ -- This doesn't work yet
+					--[[
+					New("TextBox")({
 						Name = "Data",
 						PlaceholderText = "arg1, arg2, arg3...",
 						TextSize = Style.Text.Sizes.Body,
@@ -265,6 +268,7 @@ return function(props)
 
 						Visible = false,
 					}),
+					]]
 
 					New("Frame")({
 						Name = "InnerFrame",
@@ -274,14 +278,9 @@ return function(props)
 						BorderColor3 = Style.Palettes.Default.Border,
 						AnchorPoint = Vector2.new(0.5, 1),
 						Position = UDim2.new(0.5, 0, 1, -5),
-						Size = UDim2.new(1, -10, 1, -40 - 32),
+						Size = UDim2.new(1, -10, 1, -35),
 
-						[Children] = {
-							New("UIListLayout")({
-								Padding = UDim.new(0, 1),
-								SortOrder = Enum.SortOrder.LayoutOrder,
-							}),
-						},
+						[Children] = actionInnerFrameChildren,
 					}),
 				},
 			}),
