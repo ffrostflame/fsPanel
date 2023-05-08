@@ -13,7 +13,7 @@ local Stat = require(components.stat)
 local DebugActionButton = require(components.debugActionButton)
 
 local DataHandler = require(script.Parent.Parent.dataHandler)
-local Visualizer = require(Script.Parent.Visualizer)
+local Visualizer = require(script.Parent.Visualizer)
 local Style = require(script.Parent.Data.style)
 
 local enums = require(script.Parent.Parent.Parent.enums)
