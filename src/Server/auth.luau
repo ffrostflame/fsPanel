@@ -1,6 +1,8 @@
 local Players = game:GetService("Players")
 local RunService = game:GetService("RunService")
 
+local logging = require(script.Parent.Parent.logging)
+
 local auth = {}
 
 local authorizedPlayers = {}
@@ -31,16 +33,22 @@ function auth.init()
 	end)
 end
 
-function auth.getAuthorizedPlayers(): { Player }
+function auth._getAuthorizedPlayers(): { Player }
 	return authorizedPlayers
 end
 
-function auth.isPlayerAuthorized(plr: Player)
-	return table.find(authorizedPlayers, plr) ~= nil
+function auth.isPlayerAuthorized(player: Player)
+	local typeofPlayer = typeof(player)
+	logging.typecheck(typeofPlayer == "Instance", typeofPlayer, "Instance")
+
+	return table.find(authorizedPlayers, player) ~= nil
 end
 
-function auth.setAuthorizationFunction(func)
-	playerAuthFunction = func
+function auth.setAuthorizationFunction(authFunc: (Player) -> boolean)
+	local typeofAuthFunc = typeof(authFunc)
+	logging.typecheck(typeofAuthFunc == "function", typeofAuthFunc, "function")
+
+	playerAuthFunction = authFunc
 end
 
 return auth

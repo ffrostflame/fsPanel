@@ -34,8 +34,7 @@ return table.freeze({
 	init = require(script.initializer),
 
 	-- authorization
-	isPlayedAuthorized = auth.isPlayerAuthorized,
-	getAuthorizedPlayers = auth.getAuthorizedPlayers,
+	isPlayerAuthorized = auth.isPlayerAuthorized,
 	setAuthorizedFunction = auth.setAuthorizationFunction,
 
 	-- server stats

@@ -9,5 +9,15 @@ fsPanel.Server.init({
 	},
 	playerAuthFunction = function()
 		return true
-	end
+	end,
+	replicatedValues = {
+		testValue = 5
+	}
 })
+
+task.spawn(function()
+	while true do
+		fsPanel.Server.updateValue("testValue", math.random(1,6))
+		task.wait(1)
+	end
+end)

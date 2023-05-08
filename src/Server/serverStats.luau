@@ -24,7 +24,7 @@ function serverStats.init()
 	end)
 end
 
-function serverStats.getServerStats()
+function serverStats._getServerStatsArray()
 	return {
 		[enums.ServerStatItems.DataReceiveKbps] = floatToString(Stats.DataReceiveKbps, 3),
 		[enums.ServerStatItems.DataSendKbps] = floatToString(Stats.DataSendKbps, 3),
@@ -32,6 +32,17 @@ function serverStats.getServerStats()
 		[enums.ServerStatItems.PhysicsStepTimeMs] = floatToString(Stats.PhysicsStepTimeMs, 3),
 		[enums.ServerStatItems.ServerFps] = floatToString(currentFps, 3),
 		[enums.ServerStatItems.TotalMemoryUsageMb] = floatToString(Stats:GetTotalMemoryUsageMb())
+	}
+end
+
+function serverStats.getServerStats()
+	return {
+		DataReceiveKbps = floatToString(Stats.DataReceiveKbps, 3),
+		DataSendKbps = floatToString(Stats.DataSendKbps, 3),
+		HeartbeatTimeMs = floatToString(Stats.HeartbeatTimeMs, 3),
+		PhysicsStepTimeMs = floatToString(Stats.PhysicsStepTimeMs, 3),
+		ServerFps = floatToString(currentFps, 3),
+		TotalMemoryUsageMb = floatToString(Stats:GetTotalMemoryUsageMb())
 	}
 end
 

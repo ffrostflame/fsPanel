@@ -10,11 +10,11 @@ function debugActions.init(actions)
 	end
 end
 
-function debugActions.getActionNames()
+function debugActions._getActionNames()
 	return actionNames
 end
 
-function debugActions.callDebugAction(player: Player, action: string)
+function debugActions._callDebugAction(player: Player, action: string)
 	actionDictionary[action](player)
 end
 
