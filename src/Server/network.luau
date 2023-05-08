@@ -69,7 +69,7 @@ function network.init()
 
 			table.clear(valuesToUpdate)
 
-			for _, player in auth.getAuthorizedPlayers() do
+			for _, player in auth._getAuthorizedPlayers() do
 				communicationRemote:FireClient(player, { enums.PacketTypes.update, data })
 			end
 		end

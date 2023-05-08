@@ -1,5 +1,6 @@
 local auth = require(script.auth)
 local serverStats = require(script.serverStats)
+local replicatedValues = require(script.replicatedValues)
 
 --[=[
 	@class Server
@@ -39,4 +40,6 @@ return table.freeze({
 
 	-- server stats
 	getServerStats = serverStats.getServerStats,
+
+	updateValue = replicatedValues.updateValue,
 })
