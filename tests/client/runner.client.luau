@@ -4,7 +4,10 @@ local fsPanel = require(ReplicatedStorage.Packages.fsPanel)
 print(fsPanel)
 
 fsPanel.Client.init({
+	--[[
 	toggleKeys = {
-		Enum.KeyCode.X
-	}
+		Enum.KeyCode.LeftAlt,
+		Enum.KeyCode.F5,
+	},
+	]]
 })
