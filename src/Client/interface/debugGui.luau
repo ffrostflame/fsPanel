@@ -13,7 +13,7 @@ local Stat = require(components.stat)
 local DebugActionButton = require(components.debugActionButton)
 
 local DataHandler = require(script.Parent.Parent.dataHandler)
-local Visualizer = require(script.Parent.visualizer)
+local Visualizer = require(script.Parent.Parent.visualizer)
 local Style = require(script.Parent.Data.style)
 
 local enums = require(script.Parent.Parent.Parent.enums)
@@ -391,41 +391,55 @@ return function(props)
 				Size = UDim2.new(0.333, 0, 0.2, 0),
 
 				[Children] = {
-					New("TextLabel")({
-						Name = "Visualizers",
-						Text = "Visualizers",
-						BackgroundTransparency = 1,
-						TextSize = Style.Text.Sizes.Body,
-						Size = UDim2.new(1, 0, 0, 16),
-						TextColor3 = Style.Palettes.Default.Foreground,
-						Font = Style.Text.Fonts.Default,
-						TextXAlignment = Enum.TextXAlignment.Left,
+					New("Frame")({
+						Name = "InnerFrame",
+						BackgroundTransparency = 0.4,
+						BorderSizePixel = 1,
+						BackgroundColor3 = Style.Palettes.Default.BackgroundDark,
+						BorderColor3 = Style.Palettes.Default.Border,
+						AnchorPoint = Vector2.new(0.5, 0.5),
+						Position = UDim2.new(0.5, 0, 0.5, 0),
+						Size = UDim2.new(1, -10, 1, -10),
 
 						[Children] = {
-							New("TextButton")({
-								Name = "Button",
-								Text = Computed(function()
-									return visualizerEnabledValue:get() and "ON" or "OFF"
-								end),
-								TextWrapped = true,
-								BackgroundTransparency = Computed(function()
-									return visualizerEnabledValue:get() and 0.8 or 0.4
-								end),
-								BackgroundColor3 = Style.Palettes.Default.BackgroundLight,
-								AutoButtonColor = true,
-								BorderSizePixel = 1,
-								BorderColor3 = Style.Palettes.Default.Border,
-								TextColor3 = Style.Palettes.Default.Foreground,
+							New("TextLabel")({
+								Name = "Visualizers",
+								Text = "Visualizers",
+								BackgroundTransparency = 1,
 								TextSize = Style.Text.Sizes.Body,
+								Size = UDim2.new(1, 0, 0, 16),
+								TextColor3 = Style.Palettes.Default.Foreground,
 								Font = Style.Text.Fonts.Default,
-								TextXAlignment = Enum.TextXAlignment.Center,
-								AnchorPoint = Vector2.new(1, 0.5),
-								Position = UDim2.new(1, 0, 0.5, 0),
-								Size = UDim2.new(0.25, 0, 1, 0),
+								TextXAlignment = Enum.TextXAlignment.Left,
 
-								[OnEvent("Activated")] = function()
-									visualizerEnabledValue:set(not visualizerEnabledValue:get())
-								end,
+								[Children] = {
+									New("TextButton")({
+										Name = "Button",
+										Text = Computed(function()
+											return visualizerEnabledValue:get() and "ON" or "OFF"
+										end),
+										TextWrapped = true,
+										BackgroundTransparency = 0.4,
+										BackgroundColor3 = Computed(function()
+											return visualizerEnabledValue:get() and Style.Palettes.Default.ButtonOn
+												or Style.Palettes.Default.ButtonOff
+										end),
+										AutoButtonColor = true,
+										BorderSizePixel = 1,
+										BorderColor3 = Style.Palettes.Default.Border,
+										TextColor3 = Style.Palettes.Default.Foreground,
+										TextSize = Style.Text.Sizes.Body,
+										Font = Style.Text.Fonts.Default,
+										TextXAlignment = Enum.TextXAlignment.Center,
+										AnchorPoint = Vector2.new(1, 0.5),
+										Position = UDim2.new(1, 0, 0.5, 0),
+										Size = UDim2.new(0.25, 0, 1, 0),
+
+										[OnEvent("Activated")] = function()
+											visualizerEnabledValue:set(not visualizerEnabledValue:get())
+										end,
+									}),
+								},
 							}),
 						},
 					}),

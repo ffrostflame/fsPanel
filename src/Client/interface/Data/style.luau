@@ -8,6 +8,8 @@ style.Palettes = {
 		Border = Color3.fromRGB(10, 10, 10),
 		Accent = Color3.new(1, 0.776470, 0.160784),
 		Foreground = Color3.new(1, 1, 1),
+		ButtonOff = Color3.fromRGB(50, 0, 0),
+		ButtonOn = Color3.fromRGB(0, 50, 0),
 	},
 }
 
