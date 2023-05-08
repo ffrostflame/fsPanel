@@ -67,10 +67,9 @@ function network.init()
 				[enums.Categories.GameStats] = valuesToUpdate,
 			}
 
-			table.clear(valuesToUpdate)
-
 			for _, player in auth._getAuthorizedPlayers() do
 				communicationRemote:FireClient(player, { enums.PacketTypes.update, data })
+				table.clear(valuesToUpdate)
 			end
 		end
 		debug.profileend()
