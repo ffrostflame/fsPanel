@@ -19,6 +19,7 @@ local enums = require(script.Parent.Parent.Parent.enums)
 return function(props)
 	local setupData = props.SetupData
 
+	-- Window dragging
 	local frameRef = Value()
 
 	local dragging = false
@@ -63,6 +64,28 @@ return function(props)
 		dragConnection:Disconnect()
 	end)
 
+	-- Game stats
+	local gameStatInnerFrameRef = Value()
+
+	local gameStatInnerFrameChildren = {
+		New("UIListLayout")({
+			Padding = UDim.new(0, 1),
+			SortOrder = Enum.SortOrder.LayoutOrder,
+		}),
+	}
+
+	for statName, _ in setupData.replicatedValues do
+		table.insert(
+			gameStatInnerFrameChildren,
+			Stat({
+				Name = statName,
+				StatCategory = enums.Categories.GameStats,
+				StatValue = DataHandler.GameStats[statName],
+			})
+		)
+	end
+
+	-- Debug actions
 	local actionInnerFrameChildren = {
 		New("UIListLayout")({
 			Padding = UDim.new(0, 1),
@@ -136,7 +159,7 @@ return function(props)
 						TextXAlignment = Enum.TextXAlignment.Center,
 					}),
 
-					New("Frame")({
+					New("ScrollingFrame")({
 						Name = "InnerFrame",
 						BackgroundTransparency = 0.4,
 						BorderSizePixel = 1,
@@ -145,6 +168,7 @@ return function(props)
 						AnchorPoint = Vector2.new(0.5, 1),
 						Position = UDim2.new(0.5, 0, 1, -5),
 						Size = UDim2.new(1, -10, 1, -35),
+						AutomaticCanvasSize = Enum.AutomaticSize.Y,
 
 						[Children] = {
 							New("UIListLayout")({
@@ -273,6 +297,23 @@ return function(props)
 				AnchorPoint = Vector2.new(0.5, 1),
 				Position = UDim2.new(0.5, 0, 1, 0),
 				Size = UDim2.new(0.333, 0, 1, -30),
+
+				[Children] = {
+					New("ScrollingFrame")({
+						Name = "InnerFrame",
+						BackgroundTransparency = 0.4,
+						BorderSizePixel = 1,
+						BackgroundColor3 = Style.Palettes.Default.BackgroundDark,
+						BorderColor3 = Style.Palettes.Default.Border,
+						AnchorPoint = Vector2.new(0.5, 1),
+						Position = UDim2.new(0.5, 0, 1, -5),
+						Size = UDim2.new(1, -10, 1, -35),
+						AutomaticCanvasSize = Enum.AutomaticSize.Y,
+						[Ref] = gameStatInnerFrameRef,
+
+						[Children] = gameStatInnerFrameChildren,
+					}),
+				},
 			}),
 
 			New("Frame")({
@@ -281,9 +322,9 @@ return function(props)
 				BorderSizePixel = 1,
 				BackgroundColor3 = Style.Palettes.Default.BackgroundLight,
 				BorderColor3 = Style.Palettes.Default.Border,
-				AnchorPoint = Vector2.new(1, 1),
-				Position = UDim2.new(1, 0, 1, 0),
-				Size = UDim2.new(0.333, 0, 1, -30),
+				AnchorPoint = Vector2.new(1, 0),
+				Position = UDim2.new(1, 0, 0, 30),
+				Size = UDim2.new(0.333, 0, 0.8, -30),
 
 				[Children] = {
 					New("TextLabel")({
@@ -320,7 +361,7 @@ return function(props)
 					}),
 					]]
 
-					New("Frame")({
+					New("ScrollingFrame")({
 						Name = "InnerFrame",
 						BackgroundTransparency = 0.4,
 						BorderSizePixel = 1,
@@ -329,10 +370,24 @@ return function(props)
 						AnchorPoint = Vector2.new(0.5, 1),
 						Position = UDim2.new(0.5, 0, 1, -5),
 						Size = UDim2.new(1, -10, 1, -35),
+						AutomaticCanvasSize = Enum.AutomaticSize.Y,
 
 						[Children] = actionInnerFrameChildren,
 					}),
 				},
+			}),
+
+			New("Frame")({
+				Name = "Misc",
+				BackgroundTransparency = 0.4,
+				BorderSizePixel = 1,
+				BackgroundColor3 = Style.Palettes.Default.BackgroundLight,
+				BorderColor3 = Style.Palettes.Default.Border,
+				AnchorPoint = Vector2.new(1, 1),
+				Position = UDim2.new(1, 0, 1, 0),
+				Size = UDim2.new(0.333, 0, 0.2, 0),
+
+				[Children] = {},
 			}),
 		},
 	})

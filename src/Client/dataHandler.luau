@@ -37,18 +37,34 @@ DataHandler.TargetFunctions =
 				return math.clamp(1 - ((number - min) / (max - min)), 0, 1)
 			end,
 		},
+
+		[enums.Categories.GameStats] = {
+			custom = function(text: string)
+				local number = tonumber(text)
+
+				return -1
+			end,
+		},
 	}
 
 DataHandler.ServerStats = {
-	[enums.ServerStatItems.DataReceiveKbps] = Value(0), -- >?
-	[enums.ServerStatItems.DataSendKbps] = Value(0), -- >?
-	[enums.ServerStatItems.HeartbeatTimeMs] = Value(0), -- >10
-	[enums.ServerStatItems.PhysicsStepTimeMs] = Value(0), -- >12
-	[enums.ServerStatItems.ServerFps] = Value(0), -- <50
-	[enums.ServerStatItems.TotalMemoryUsageMb] = Value(0), -- >4
+	[enums.ServerStatItems.DataReceiveKbps] = Value(0),
+	[enums.ServerStatItems.DataSendKbps] = Value(0),
+	[enums.ServerStatItems.HeartbeatTimeMs] = Value(0),
+	[enums.ServerStatItems.PhysicsStepTimeMs] = Value(0),
+	[enums.ServerStatItems.ServerFps] = Value(0),
+	[enums.ServerStatItems.TotalMemoryUsageMb] = Value(0),
 }
 
+DataHandler.GameStats = {} -- The indexes for this are different; they're the names of the stats
+
 function DataHandler.init(setupData, clientConfig)
+	-- Set up game stats
+	for statName, statData in setupData.replicatedValues do
+		DataHandler.GameStats[statName] = Value(statData)
+	end
+
+	-- Updates
 	remote = ReplicatedStorage.fsPanelFolder.fsPanel_communicationRemote
 
 	remote.OnClientEvent:Connect(function(receivedPerfData)
@@ -58,12 +74,16 @@ function DataHandler.init(setupData, clientConfig)
 		end
 
 		local newStats = receivedPerfData[2]
+		-- Update server stats
 		for _, index in enums.ServerStatItems do
 			local newValueData = newStats[enums.Categories.ServerStats][index]
 			DataHandler.ServerStats[index]:set(newValueData)
 		end
 
-		-- Add GameStats to this update function later
+		-- Update game stats
+		for statName, statData in newStats[enums.Categories.GameStats] do
+			DataHandler.GameStats[statName]:set(statData)
+		end
 	end)
 end
 

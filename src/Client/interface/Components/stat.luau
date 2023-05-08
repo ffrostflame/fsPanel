@@ -41,7 +41,7 @@ return function(props)
 
 					local goodness = targetFunction(props.StatValue:get())
 					if goodness == -1 then
-						return Color3.new(0.560784, 0.560784, 0.560784)
+						return Color3.new(1, 1, 1)
 					end
 
 					return Color3.fromHSV((120 / 359) * goodness, 1, 1)
