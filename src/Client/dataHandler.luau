@@ -1,9 +1,10 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Fusion = require(script.Parent.Parent.Parent.Parent.Packages.Fusion)
-local Value = Fusion.Value
-
+local logging = require(script.Parent.Parent.logging)
 local enums = require(script.Parent.Parent.enums)
+
+local Value = Fusion.Value
 
 local remote
 
@@ -12,10 +13,10 @@ local DataHandler = {}
 DataHandler.TargetFunctions =
 	{ -- Each target function returns a 0-1 value indicating how optimal the value is (0 = worst, 1 = best, -1 = not applicable/something went wrong)
 		[enums.Categories.ServerStats] = {
-			[enums.ServerStatItems.DataReceiveKbps] = function(text: string)
+			[enums.ServerStatItems.DataReceiveKbps] = function(_: string)
 				return -1
 			end,
-			[enums.ServerStatItems.DataSendKbps] = function(text: string)
+			[enums.ServerStatItems.DataSendKbps] = function(_: string)
 				return -1
 			end,
 			[enums.ServerStatItems.HeartbeatTimeMs] = function(text: string)
@@ -40,7 +41,7 @@ DataHandler.TargetFunctions =
 
 		[enums.Categories.GameStats] = {
 			custom = function(text: string)
-				local number = tonumber(text)
+				local _ = tonumber(text)
 
 				return -1
 			end,
@@ -58,7 +59,7 @@ DataHandler.ServerStats = {
 
 DataHandler.GameStats = {} -- The indexes for this are different; they're the names of the stats
 
-function DataHandler.init(setupData, clientConfig)
+function DataHandler.init(setupData)
 	-- Set up game stats
 	for statName, statData in setupData.replicatedValues do
 		DataHandler.GameStats[statName] = Value(statData)
@@ -67,22 +68,23 @@ function DataHandler.init(setupData, clientConfig)
 	-- Updates
 	remote = ReplicatedStorage.fsPanelFolder.fsPanel_communicationRemote
 
-	remote.OnClientEvent:Connect(function(receivedPerfData)
-		local packetType = receivedPerfData[1]
-		if packetType ~= enums.PacketTypes.update then
-			return
-		end
+	remote.OnClientEvent:Connect(function(receivedData)
+		local packetType = receivedData[1]
+		if packetType == enums.PacketTypes.update then
+			local newStats = receivedData[2]
+			-- Update server stats
+			for _, index in enums.ServerStatItems do
+				local newValueData = newStats[enums.Categories.ServerStats][index]
+				DataHandler.ServerStats[index]:set(newValueData)
+			end
 
-		local newStats = receivedPerfData[2]
-		-- Update server stats
-		for _, index in enums.ServerStatItems do
-			local newValueData = newStats[enums.Categories.ServerStats][index]
-			DataHandler.ServerStats[index]:set(newValueData)
-		end
-
-		-- Update game stats
-		for statName, statData in newStats[enums.Categories.GameStats] do
-			DataHandler.GameStats[statName]:set(statData)
+			-- Update game stats
+			for statName, statData in newStats[enums.Categories.GameStats] do
+				DataHandler.GameStats[statName]:set(statData)
+			end
+		elseif packetType == enums.PacketTypes.printToClient then
+			local toPrint = receivedData[2]
+			logging.print(toPrint)
 		end
 	end)
 end

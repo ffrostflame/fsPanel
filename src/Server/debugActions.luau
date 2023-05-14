@@ -4,7 +4,7 @@ local actionDictionary = {}
 local actionNames = {}
 
 function debugActions.init(actions)
-	for action, label in actions do
+	for label, action in actions do
 		table.insert(actionNames, label)
 		actionDictionary[label] = action
 	end

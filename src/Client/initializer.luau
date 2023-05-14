@@ -8,6 +8,7 @@ return function(clientConfig)
 		return
 	end
 
-	require(script.Parent.dataHandler).init(setupData, clientConfig)
+	print(setupData)
+	require(script.Parent.dataHandler).init(setupData)
 	require(script.Parent.interface).init(setupData, clientConfig)
 end

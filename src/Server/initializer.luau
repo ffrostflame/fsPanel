@@ -22,8 +22,8 @@ return function(serverConfig: serverConfig)
 
 	local typeofAuthFunction = typeof(serverConfig.playerAuthFunction or function() end)
 	logging.typecheck(typeofAuthFunction == "function", typeofAuthFunction, "function")
-	
-	for label, func in serverConfig.debugActions or {} do
+
+	for label, func in (serverConfig.debugActions or {}) do
 		local typeofLabel = typeof(label)
 		logging.typecheck(typeofLabel == "string", typeofLabel, "string")
 
@@ -31,7 +31,7 @@ return function(serverConfig: serverConfig)
 		logging.typecheck(typeofFunc == "function", typeofFunc, "function")
 	end
 
-	for label in serverConfig.replicatedValues or {} do
+	for label in (serverConfig.replicatedValues or {}) do
 		local typeofLabel = typeof(label)
 		logging.typecheck(typeofLabel == "string", typeofLabel, "string")
 	end

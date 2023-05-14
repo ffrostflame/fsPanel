@@ -31,7 +31,7 @@ function network.init()
 		local isAuthorized = auth.isPlayerAuthorized(player)
 
 		if isAuthorized then
-			logging.print(`authorized player { player.Name }:{ player.UserId } has joined the game`)
+			logging.print(`authorized player {player.Name}:{player.UserId} has joined the game`)
 		end
 
 		return {
